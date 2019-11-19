@@ -29,12 +29,14 @@ public class ClientChatUI extends JFrame {
         //the host information
         JPanel hostPanel = new JPanel(new BorderLayout());
         hostPanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,4));
-        Label host = new Label("Host:");
+        JLabel host = new JLabel("Host:");
         host.setPreferredSize(new Dimension(35,30));
 
         JTextField hostInfo = new JTextField();
         hostInfo.setText("localhost");
         hostInfo.requestFocus();
+        host.setLabelFor(hostInfo); // set the label host to the hostInfo textfield
+        host.setDisplayedMnemonic('h');
         hostPanel.add(host, BorderLayout.WEST);
         hostPanel.add(hostInfo, BorderLayout.CENTER);
         connection.add(hostPanel, BorderLayout.NORTH);
@@ -44,12 +46,14 @@ public class ClientChatUI extends JFrame {
          */
         JPanel portPanel = new JPanel(new BorderLayout());
         portPanel.setBorder(BorderFactory.createEmptyBorder(0,5,0,0));
-        Label port = new Label("Port:");
+        JLabel port = new JLabel("Port:");
         port.setPreferredSize(new Dimension(35,30));
         portPanel.add(port, BorderLayout.WEST);
 
         JPanel portButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 0));
         JComboBox portBox = new JComboBox(PORTARRAY);
+        port.setLabelFor(portBox); // set the label for portBox to port
+        port.setDisplayedMnemonic('p');
         portBox.setEditable(true);
         portBox.setBackground(Color.WHITE);
         portBox.setOpaque(true);
