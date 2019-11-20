@@ -7,7 +7,7 @@ Date:       2019-11-19
 Professor:  Daniel Cormier
 Purpose:    To run the ClientChatUI application
  */
-import java.awt.*;
+import java.awt.Dimension;
 
 /**
  * The Client class is responsible for creating a ClientChatUI object and setting some of the parameters for it.

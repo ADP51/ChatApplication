@@ -7,9 +7,9 @@ Date:       2019-11-19
 Professor:  Daniel Cormier
 Purpose:    To run the ServerChat application
  */
-import javax.swing.*;
-        import java.awt.*;
-        import java.net.Socket;
+import javax.swing.SwingUtilities;
+import java.awt.Dimension;
+import java.net.Socket;
 
 /**
  * The Server class is responsible for creating a ServerChatUI object and setting some of the parameters for it.
