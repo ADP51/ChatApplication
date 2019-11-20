@@ -8,6 +8,9 @@ Professor:  Daniel Cormier
 Purpose:    To create the client chat GUI and implement the controller for all of the inputs
 Class List: ClientChatUI, Controller, WindowController
  */
+
+import com.sun.tools.javac.comp.Flow;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,11 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -54,6 +55,7 @@ public class ClientChatUI extends JFrame {
     public JPanel createClientUI() {
         Controller controller = new Controller();
         JPanel main = new JPanel(new BorderLayout());
+        main.setBorder(new EmptyBorder(5,0,5,0));
 
         /***********************************************
          The connection panel set up
@@ -65,41 +67,37 @@ public class ClientChatUI extends JFrame {
         connection.setBorder(connectionTitle);
 
         //the host information
-        JPanel hostPanel = new JPanel(new BorderLayout());
-        hostPanel.setBorder(BorderFactory.createEmptyBorder(0,5,10,0)); //making labels line up
+        JPanel hostPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+
         JLabel host = new JLabel("Host:");
         host.setPreferredSize(new Dimension(35,30));
 
-        JTextField hostInfo = new JTextField();
-        hostInfo.setText("localhost");
-        hostInfo.requestFocus(); // on start this has focus
-        hostInfo.setPreferredSize(new Dimension(494,25));
+        JTextField hostInfo = new JTextField("localhost", 42);
+        hostInfo.requestFocusInWindow(); // on start this has focus
         host.setLabelFor(hostInfo); // set the label host to the hostInfo textfield
         host.setDisplayedMnemonic(KeyEvent.VK_H); //add mnemonic to label for host textfield
-        hostPanel.add(host, BorderLayout.WEST);
-        hostPanel.add(hostInfo, BorderLayout.CENTER);
+        hostPanel.add(host);
+        hostPanel.add(hostInfo);
         connection.add(hostPanel, BorderLayout.NORTH);
 
         /*********************************************
         The port components to be added to the display
          *********************************************/
-        JPanel portPanel = new JPanel(new BorderLayout());
-        portPanel.setBorder(BorderFactory.createEmptyBorder(0,5,0,0)); // to make the labels line up
+        JPanel portPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+
         JLabel port = new JLabel("Port:");
         port.setPreferredSize(new Dimension(35,30)); // required size for the label
-        portPanel.add(port, BorderLayout.WEST);
+        portPanel.add(port);
 
-        JPanel portButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); //add combo box and connect button to this panel
         JComboBox portBox = new JComboBox(PORTARRAY); // gets the array of default port numbers and adds to combobox
         port.setDisplayedMnemonic(KeyEvent.VK_P); // set the mnemonic for port label
         port.setLabelFor(portBox); // set the label for portBox to port
         portBox.setEditable(true);
         portBox.setBackground(Color.WHITE); //required background color
-        portBox.setOpaque(true); // to make it work on mac sort of
-        portBox.setPreferredSize(new Dimension(125, 25));
+        portBox.setPreferredSize(new Dimension(100, 20));
         portBox.setBorder(BorderFactory.createEmptyBorder(0,0,0,5));
         portBox.addActionListener(controller); //add listener might not be required
-        portButtons.add(portBox);
+        portPanel.add(portBox);
 
         JButton connectButton = new JButton("Connect");
         connectButton.setBackground(Color.red);
@@ -107,9 +105,8 @@ public class ClientChatUI extends JFrame {
         connectButton.setBorderPainted(false); // works on mac
         connectButton.setActionCommand("connect"); // set the action command for the controller
         connectButton.addActionListener(controller);
-        connectButton.setPreferredSize(new Dimension(125,25));
-        portButtons.add(connectButton);
-        portPanel.add(portButtons, BorderLayout.CENTER);
+        connectButton.setPreferredSize(new Dimension(100,20));
+        portPanel.add(connectButton);
 
         connection.add(portPanel, BorderLayout.SOUTH);
 
@@ -122,7 +119,7 @@ public class ClientChatUI extends JFrame {
         /**********************************************
         The message components
          **********************************************/
-        JPanel message = new JPanel(new BorderLayout());
+        JPanel message = new JPanel(new FlowLayout(FlowLayout.LEFT,5,5));
         //set up the titled border
         TitledBorder messageTitle;
         messageTitle = new TitledBorder("MESSAGE");
@@ -130,9 +127,8 @@ public class ClientChatUI extends JFrame {
         messageTitle.setTitle("MESSAGE");
         message.setBorder(messageTitle);
         //set up the message textfield
-        JTextField messageField = new JTextField();
-        messageField.setText("Type Message");
-        message.add(messageField, BorderLayout.CENTER);
+        JTextField messageField = new JTextField("Type Message", 38);
+        message.add(messageField);
 
         //set up send button for messageField
         JButton send = new JButton("Send");
@@ -140,9 +136,9 @@ public class ClientChatUI extends JFrame {
         send.setActionCommand("Send");
         send.setEnabled(false);
         send.setOpaque(true);
-        send.setPreferredSize(new Dimension(125,25));
+        send.setPreferredSize(new Dimension(80,19));
+        message.add(send);
 
-        message.add(send, BorderLayout.EAST);
         groupingPanel.add(message, BorderLayout.NORTH);
 
         /********************************
